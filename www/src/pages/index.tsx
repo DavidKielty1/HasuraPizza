@@ -1,13 +1,12 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { GetServerSideProps } from "next";
 import { client } from "../utils/client";
 import {
   GetFriends,
   GetFriendsQuery,
   GetFriendsQueryVariables,
 } from "../../generated/graphql";
-import styles from "../styles/Home.module.css";
 
 interface Props {
   friends: GetFriendsQuery["friend"];
@@ -15,14 +14,14 @@ interface Props {
 
 const Home: NextPage<Props> = ({ friends }) => {
   return (
-    <div className={styles.container}>
+    <div className="">
       <Head>
-        <title>Pizza App</title>
+        <title>Hasura Pizza</title>
         <meta name="Hasura pizza app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main className="">
         {friends.map((friend) => (
           <p key={friend.id}>{friend.name}</p>
         ))}
