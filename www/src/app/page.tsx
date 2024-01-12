@@ -1,6 +1,10 @@
-"use client";
+"use server";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
+
+interface Friend {
+  name: string;
+}
 
 async function getFriends() {
   try {
@@ -10,6 +14,7 @@ async function getFriends() {
         method: "POST",
         headers: {
           "x-hasura-admin-secret": process.env.HASURA_ADMIN_SECRET as string,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           query: `query {
@@ -26,35 +31,28 @@ async function getFriends() {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const data = await response.json();
-    return data.data.friend;
+    const friends = await response.json();
+    return friends;
   } catch (error) {
     console.error("Error fetching friends:", error);
+    return [];
   }
 }
 
-getFriends();
-
-interface Friend {
-  name: string;
-}
-
-export default function Home() {
-  const [friends, setFriends] = useState<Friend[]>([]);
-  console.log(friends);
-  useEffect(() => {
-    getFriends().then((fetchedFriends) => {
-      setFriends(fetchedFriends);
-    });
-  }, []);
+export default async function Home() {
+  const friendsObjects = await getFriends();
+  console.log(friendsObjects.data.friend);
+  const friends = friendsObjects.data.friend;
 
   return (
-    <div className="w-full">
-      <div className="text-center">
-        {friends.length > 0
-          ? friends.map((friend, index) => <div key={index}>{friend.name}</div>)
-          : "Loading..."}
-      </div>
-    </div>
+    <ul>
+      {friends.length ? (
+        friends.map((friend: Friend) => (
+          <div key={friend.name}>{friend.name}</div>
+        ))
+      ) : (
+        <div>hi</div>
+      )}
+    </ul>
   );
 }
