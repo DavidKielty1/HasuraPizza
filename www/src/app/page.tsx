@@ -35,8 +35,12 @@ async function getFriends() {
 
 getFriends();
 
+interface Friend {
+  name: string;
+}
+
 export default function Home() {
-  const [friends, setFriends] = useState([]);
+  const [friends, setFriends] = useState<Friend[]>([]);
   console.log(friends);
   useEffect(() => {
     getFriends().then((fetchedFriends) => {
