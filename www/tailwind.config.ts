@@ -1,20 +1,17 @@
-import type { Config } from "tailwindcss";
-
-const config: Config = {
+module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
   },
-  plugins: [require("daisyui")],
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {
     themes: [
       "light",
-      "dark",
       "cupcake",
+      "dark",
       "bumblebee",
       "emerald",
       "corporate",
@@ -41,10 +38,6 @@ const config: Config = {
       "night",
       "coffee",
       "winter",
-      "dim",
-      "nord",
-      "sunset",
     ],
   },
 };
-export default config;
